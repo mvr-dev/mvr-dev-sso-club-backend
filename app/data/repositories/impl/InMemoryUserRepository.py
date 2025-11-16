@@ -7,11 +7,12 @@ class InMemoryUserRepository(IUserRepository):
         self._data = {}
         self._next_id = 1
     
-    async def getUserById(self, id : int) -> Optional[User]: # type: ignore
+    async def getUserById(self, id : int) -> Optional[User]:
         return self._data.get(id)
 
      
-    async def getAllUsers(self) -> List[User]: # type: ignore
+    async def getAllUsers(self) -> List[User]:
+        # print(self._data)
         return self._data.values()
 
     
@@ -20,6 +21,7 @@ class InMemoryUserRepository(IUserRepository):
             user.id = self._next_id
             self._next_id+=1
         self._data[user.id] = user
+        # print(user)
         return user
 
     

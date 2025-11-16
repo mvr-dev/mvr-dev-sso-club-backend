@@ -1,8 +1,9 @@
 from data.repositories import IUserRepository
 from data import UserResponse, UserCreateRequest
 from data.models.User import User
+from ..iuser_service import IUserService
 
-class UserService:
+class UserService(IUserService):
     def __init__(self, userRepository: IUserRepository):
         self._userRepository = userRepository
     

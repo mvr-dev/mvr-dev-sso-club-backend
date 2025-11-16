@@ -1,35 +1,27 @@
-# from fastapi import APIRouter
-# from data import UserResponse, UserCreateRequest
-
-# router = APIRouter()
-
-# @router.post("/register", response_model=UserResponse)
-# async def register(user_data: UserCreateRequest):
-#     return UserResponse(
-#         id=1,
-#         name=user_data.name,
-#         surname=user_data.surname
-#     )
-
-# @router.post("/signin")
-# async def signin():
-#     return {"message": "Signin endpoint works!"}
-
-# app/api/routers/signin.py
 from fastapi import APIRouter, Depends
-from data import UserResponse, UserCreateRequest
-from services.UserService import UserService
+from data.models import UserResponse, UserCreateRequest
+from services.impl.UserService import UserService
 import api.dependensies as dependensies
+from services.isuggestions_service import ISuggestionsService
+from typing import List, Optional
 
 router = APIRouter()
 
 @router.post("/register", response_model=UserResponse)
 async def register(
     userCreateRequest: UserCreateRequest, 
-    userService: UserService = Depends(dependensies.get_user_service)  # ← БЕЗ СКОБОК!
+    userService: UserService = Depends(dependensies.get_user_service)
 ):
     return await userService.addUser(userCreateRequest)
 
 @router.post("/signin")
 async def signin():
     return {"message": "Signin endpoint works!"}
+
+@router.get("/names",response_model=List[str])
+async def getNames(prefix:str ="", suggestionsService: ISuggestionsService = Depends(dependensies.get_suggestions_service)):
+    return await suggestionsService.getNames(prefix)
+
+@router.get("/surnames",response_model=List[str])
+async def getNames(prefix:str ="", suggestionsService: ISuggestionsService = Depends(dependensies.get_suggestions_service)):
+    return await suggestionsService.getSurnames(prefix)
