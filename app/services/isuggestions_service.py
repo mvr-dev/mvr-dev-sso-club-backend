@@ -11,3 +11,11 @@ class ISuggestionsService(ABC):
     @abstractmethod
     def getSurnames(self,prefix:str)->List[str]:
         pass
+
+    @abstractmethod
+    def addName(self,name:str)->None:
+        pass
+
+    @abstractmethod
+    def addSurname(self,surname:str)->None:
+        pass

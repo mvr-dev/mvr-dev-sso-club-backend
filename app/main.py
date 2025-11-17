@@ -1,9 +1,18 @@
-# app/main.py
 from fastapi import FastAPI
 from api.routers.signin import router as signin_router
-
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+# CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+#2
 
 app.include_router(signin_router, prefix="/api/v1", tags=["authentication"])
 

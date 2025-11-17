@@ -10,8 +10,11 @@ router = APIRouter()
 @router.post("/register", response_model=UserResponse)
 async def register(
     userCreateRequest: UserCreateRequest, 
-    userService: UserService = Depends(dependensies.get_user_service)
+    userService: UserService = Depends(dependensies.get_user_service),
+    suggestionsService: ISuggestionsService = Depends(dependensies.get_suggestions_service)
 ):
+    await suggestionsService.addName(userCreateRequest.name)
+    await suggestionsService.addSurname(userCreateRequest.surname)
     return await userService.addUser(userCreateRequest)
 
 @router.post("/signin")
@@ -20,6 +23,7 @@ async def signin():
 
 @router.get("/names",response_model=List[str])
 async def getNames(prefix:str ="", suggestionsService: ISuggestionsService = Depends(dependensies.get_suggestions_service)):
+    # print(suggestionsService.getNames())
     return await suggestionsService.getNames(prefix)
 
 @router.get("/surnames",response_model=List[str])
