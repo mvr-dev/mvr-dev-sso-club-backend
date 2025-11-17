@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from data.models import UserResponse, UserCreateRequest
-from services.impl.UserService import UserService
+from services.impl.user_service import UserService
 import api.dependensies as dependensies
 from services.isuggestions_service import ISuggestionsService
 from typing import List, Optional

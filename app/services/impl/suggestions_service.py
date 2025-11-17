@@ -1,4 +1,4 @@
-from data.repositories.IUserRepository import IUserRepository
+from data.repositories.iuser_repository import IUserRepository
 from ..isuggestions_service import ISuggestionsService
 
 

@@ -1,6 +1,6 @@
 from typing import Optional,List
 from data.models.User import User
-from data.repositories.IUserRepository import IUserRepository
+from data.repositories.iuser_repository import IUserRepository
 
 class InMemoryUserRepository(IUserRepository):
     def __init__(self):

@@ -1,6 +1,6 @@
 # app/api/dependensies.py
 from fastapi import Depends
-from services.impl.UserService import UserService
+from services.impl.user_service import UserService
 from services.impl.suggestions_service import SuggestionsService
 from data.repositories.impl.InMemoryUserRepository import InMemoryUserRepository
 

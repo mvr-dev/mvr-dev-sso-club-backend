@@ -1,10 +1,10 @@
-from data.repositories import IUserRepository
+from data.repositories import iuser_repository
 from data import UserResponse, UserCreateRequest
 from data.models.User import User
 from ..iuser_service import IUserService
 
 class UserService(IUserService):
-    def __init__(self, userRepository: IUserRepository):
+    def __init__(self, userRepository: iuser_repository):
         self._userRepository = userRepository
     
     # async def getAllUsers(self):
