@@ -5,6 +5,8 @@ class User(BaseModel):
     id : Optional[int] = None
     surname : str
     name : str
+    patronymic : str
     password : str
+    email : str
     
 

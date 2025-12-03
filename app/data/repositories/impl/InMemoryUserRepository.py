@@ -1,5 +1,5 @@
 from typing import Optional,List
-from data.models.User import User
+from data.models.user import User
 from data.repositories.iuser_repository import IUserRepository
 
 class InMemoryUserRepository(IUserRepository):

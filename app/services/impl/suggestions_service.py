@@ -6,7 +6,7 @@ class SuggestionsService(ISuggestionsService):
 
     def __init__(self, userRepository: IUserRepository):
         self.userRepository = userRepository
-        self._names = set(["Виктор","Виталий","Владислав","Владлен",])
+        self._names = set(["Виктор","Виталий","Владислав","Владлен"])
         self._surnames = set(["Иванов","Ивашкин","Ивлев","Ильев"])
 
     async def getNames(self,prefix:str):

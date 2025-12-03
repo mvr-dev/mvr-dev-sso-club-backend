@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from api.routers.signin import router as signin_router
+from api.routers.users import router as users_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -12,9 +13,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-#2
 
 app.include_router(signin_router, prefix="/api/v1", tags=["authentication"])
+app.include_router(users_router, prefix="/api/v1", tags=["user_info"])
 
 @app.get("/")
 async def root():

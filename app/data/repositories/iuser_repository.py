@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Optional,List
-from data.models.User import User
+from data.models.user import User
 
 class IUserRepository(ABC):
     @abstractmethod

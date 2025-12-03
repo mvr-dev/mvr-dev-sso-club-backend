@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from data.models import UserResponse, UserCreateRequest
-from services.impl.user_service import UserService
+from services.iuser_service import IUserService
 import api.dependensies as dependensies
 from services.isuggestions_service import ISuggestionsService
 from typing import List, Optional
@@ -10,7 +10,7 @@ router = APIRouter()
 @router.post("/register", response_model=UserResponse)
 async def register(
     userCreateRequest: UserCreateRequest, 
-    userService: UserService = Depends(dependensies.get_user_service),
+    userService: IUserService = Depends(dependensies.get_user_service),
     suggestionsService: ISuggestionsService = Depends(dependensies.get_suggestions_service)
 ):
     await suggestionsService.addName(userCreateRequest.name)

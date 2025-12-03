@@ -2,6 +2,8 @@ from pydantic import BaseModel
 
 class UserResponse(BaseModel):
     id : int
-    name : str
     surname : str
+    name : str
+    patronymic : str
+    email : str
     
