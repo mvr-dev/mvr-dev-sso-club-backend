@@ -1,5 +1,4 @@
 from sqlalchemy import Column, Date, ForeignKey, Integer, String, Boolean, DateTime
-from sqlalchemy.orm import mappe
 from core.database import Base
 
 class Account(Base):

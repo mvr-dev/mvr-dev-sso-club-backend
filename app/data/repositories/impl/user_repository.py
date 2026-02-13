@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 
 class UserRepository(IUserRepository):
     def __init__(self,db:Session):
-        self.db = 
+        self.db = db
         # переделать создание модели в методах
     
     async def getUserById(self, id: int) -> Optional[UserModel]:
@@ -19,8 +19,15 @@ class UserRepository(IUserRepository):
                 surname=foundUser.surname,
                 name=foundUser.name,
                 patronymic=foundUser.patronymic,
-                password=foundUser.hashed_password,  # Обратите внимание: в Pydantic модели поле называется password
-                email=foundUser.email
+                email=foundUser.email,
+                phone=foundUser.phone,
+                region=foundUser.region,
+                city=foundUser.city,
+                street=foundUser.street,
+                house=foundUser.house,
+                clone_code=foundUser.clone_code,
+                user_code=foundUser.user_code,
+                birthday=foundUser.birthday
             )
         else:
             raise FileNotFoundError(f"User with id {id} not found")
@@ -29,23 +36,38 @@ class UserRepository(IUserRepository):
         users = self.db.query(DbUser).all()
         return [
             UserModel(
-                id=user.id,
-                surname=user.surname,
-                name=user.name,
-                patronymic=user.patronymic,
-                password=user.hashed_password,
-                email=user.email
-            ) for user in users
+                id=foundUser.id,
+                surname=foundUser.surname,
+                name=foundUser.name,
+                patronymic=foundUser.patronymic,
+                email=foundUser.email,
+                phone=foundUser.phone,
+                region=foundUser.region,
+                city=foundUser.city,
+                street=foundUser.street,
+                house=foundUser.house,
+                clone_code=foundUser.clone_code,
+                user_code=foundUser.user_code,
+                birthday=foundUser.birthday
+            ) for foundUser in users
         ]
 
     async def addUser(self, user: UserModel) -> UserModel:
         # Создаем экземпляр DB модели
         db_user = DbUser(
+            id=user.id,
             surname=user.surname,
             name=user.name,
             patronymic=user.patronymic,
-            hashed_password=user.password,  # Сохраняем пароль как хэшированный
-            email=user.email
+            email=user.email,
+            phone=user.phone,
+            region=user.region,
+            city=user.city,
+            street=user.street,
+            house=user.house,
+            clone_code=user.clone_code,
+            user_code=user.user_code,
+            birthday=user.birthday
         )
         
         # Добавляем в сессию и коммитим
@@ -55,13 +77,20 @@ class UserRepository(IUserRepository):
         
         # Возвращаем Pydantic модель с заполненным ID
         return UserModel(
-            id=db_user.id,
-            surname=db_user.surname,
-            name=db_user.name,
-            patronymic=db_user.patronymic,
-            password=db_user.hashed_password,
-            email=db_user.email
-        )
+                id=db_user.id,
+                surname=db_user.surname,
+                name=db_user.name,
+                patronymic=db_user.patronymic,
+                email=db_user.email,
+                phone=db_user.phone,
+                region=db_user.region,
+                city=db_user.city,
+                street=db_user.street,
+                house=db_user.house,
+                clone_code=db_user.clone_code,
+                user_code=db_user.user_code,
+                birthday=db_user.birthday
+            )
 
         
 
