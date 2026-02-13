@@ -6,7 +6,8 @@ from sqlalchemy.orm import Session
 
 class UserRepository(IUserRepository):
     def __init__(self,db:Session):
-        self.db = db
+        self.db = 
+        # переделать создание модели в методах
     
     async def getUserById(self, id: int) -> Optional[UserModel]:
         # Исправлено: filter должен использовать сравнение ==
