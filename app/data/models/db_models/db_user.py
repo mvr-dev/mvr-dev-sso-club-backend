@@ -2,10 +2,10 @@ from sqlalchemy import Column, Date, Integer, String, Boolean, DateTime
 from core.database import Base
 
 class User(Base):
-    __tablename__ = "users"
+    __tablename__ = "person"
 
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    user_code = Column(String, unique=True, nullable=False)
+    id = Column(Integer, name="person_id" ,primary_key=True, index=True, autoincrement=True)
+    user_code = Column(String, name="person_code",unique=True, nullable=False)
 
     email = Column(String, unique=True, nullable=False)
     phone = Column(String, unique=True, nullable=False)
@@ -14,7 +14,7 @@ class User(Base):
     surname = Column(String, unique=False,nullable=False)
     patronymic = Column(String,unique=False,nullable=False)
 
-    birthday = Column(Date)
+    birthday = Column(Date,name="birth_date")
     clone_code = Column(String, default='5410')
 
     region = Column(String)

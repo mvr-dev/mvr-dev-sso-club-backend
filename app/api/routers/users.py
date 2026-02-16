@@ -7,7 +7,7 @@ from typing import List, Optional
 
 router = APIRouter()
 
-@router.get("/me",response_model=UserResponse)
+@router.get("/user",response_model=UserResponse)
 async def getNames(id: int, userService: IUserService = Depends(dependensies.get_user_service)):
     # print(suggestionsService.getNames())
     return await userService.getUserById(id)

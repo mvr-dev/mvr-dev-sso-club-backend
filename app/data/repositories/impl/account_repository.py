@@ -46,7 +46,7 @@ class AccountRepository(IAccountRepository):
                                status = account.status)
         self.db.add(db_account)
         self.db.commit()
-        self.db.refresh()
+        self.db.refresh(db_account)
         return Account(id=db_account.id,
                        user_id= db_account.user_id,
                        organization_code=db_account.organization_code,
