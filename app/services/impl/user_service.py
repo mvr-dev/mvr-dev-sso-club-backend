@@ -59,3 +59,20 @@ class UserService(IUserService):
             house=saved_user.house,
             phone=saved_user.phone
         )
+    
+    async def updateUser(self, id, userUpdateRequest):
+        # prev_user = await self.userRepository.getUserById(id)
+        user = User(id = userUpdateRequest.id,
+            name = userUpdateRequest.name,
+            surname = userUpdateRequest.surname,
+            patronymic= userUpdateRequest.patronymic,
+            email= userUpdateRequest.email,
+            birthday=userUpdateRequest.birthday,
+            region=userUpdateRequest.region,
+            city=userUpdateRequest.city,
+            street=userUpdateRequest.street,
+            house=userUpdateRequest.house,
+            phone=userUpdateRequest.phone,
+            user_code="2"
+            )
+        return await self.userRepository.updateUser(id,user)

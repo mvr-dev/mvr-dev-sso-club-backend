@@ -1,4 +1,6 @@
 from typing import Optional,List
+
+from sqlalchemy import update
 from data.models.db_models.db_user import User as DbUser
 from data.models.user import User as UserModel
 from data.repositories.iuser_repository import IUserRepository
@@ -95,8 +97,27 @@ class UserRepository(IUserRepository):
         
 
     
-    async def updateUser(self, user: UserModel)-> UserModel:
-        pass
+    async def updateUser(self, id ,user: UserModel)-> UserModel:
+        prev_user = self.db.query(DbUser).filter(DbUser.id == user.id).first()
+        if (prev_user!= None):
+            prev_user.surname=user.surname
+            prev_user.name=user.name
+            prev_user.patronymic=user.patronymic
+            prev_user.email=user.email
+            prev_user.phone=user.phone
+            prev_user.region=user.region
+            prev_user.city=user.city
+            prev_user.street=user.street
+            prev_user.house=user.house
+            prev_user.clone_code=user.clone_code
+            # prev_user.user_code=user.user_code
+            prev_user.birthday=user.birthday
+            self.db.commit()
+        return prev_user
+
+
+
+
 
     
     async def deleteUser(self, id: int):

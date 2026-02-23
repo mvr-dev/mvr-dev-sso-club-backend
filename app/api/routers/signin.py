@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 from data.models import UserResponse, UserCreateRequest
 from services.iuser_service import IUserService
 import api.dependensies as dependensies
@@ -7,7 +7,7 @@ from typing import List, Optional
 
 router = APIRouter()
 
-@router.post("/register", response_model=UserResponse)
+@router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 async def register(
     userCreateRequest: UserCreateRequest, 
     userService: IUserService = Depends(dependensies.get_user_service),
