@@ -8,11 +8,14 @@ from typing import List, Optional
 
 router = APIRouter()
 
-@router.get("/user",response_model=UserResponse)
+@router.get("/user/{id}",response_model=UserResponse)
 async def getUser(id: int, userService: IUserService = Depends(dependensies.get_user_service)):
     # print(suggestionsService.getNames())
     return await userService.getUserById(id)
 
-@router.put('/user',response_model=UserResponse)
+@router.put('/user/{id}',response_model=UserResponse)
 async def updateUser(id: int, userUpdateRequest : UserUpdateRequest,userService: IUserService = Depends(dependensies.get_user_service)):
     return await userService.updateUser(id,userUpdateRequest)
+
+
+    
