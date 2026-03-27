@@ -14,11 +14,14 @@ _user_service = UserService(_user_repository,_account_service)
 
 _suggestions_service = SuggestionsService(_user_repository)
 
-def get_user_service():
+def get_user_service()->UserService:
     return _user_service
 
-def get_suggestions_service():
+def get_suggestions_service() -> SuggestionsService:
     return _suggestions_service
 
-def get_user_repository():
+def get_user_repository() -> UserRepository:
     return _user_repository
+
+def get_account_service() ->AccountService:
+    return _account_service

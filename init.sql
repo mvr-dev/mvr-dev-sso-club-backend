@@ -19,7 +19,7 @@ CREATE TABLE Account (
     person_id INTEGER NOT NULL REFERENCES Person(person_id) ON DELETE CASCADE,
     organization_code VARCHAR(20) NOT NULL,
     login VARCHAR(100) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
+    password_hash BYTEA NOT NULL,
     registration_date TIMESTAMP DEFAULT NOW(),
     status SMALLINT NOT NULL DEFAULT 2,
     unique (person_id, organization_code)

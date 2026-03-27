@@ -22,6 +22,10 @@ class User(BaseModel):
 
     clone_code : str = '5410'
 
+class Credentials(BaseModel):
+    login : str
+    password : str
+
 
 
     

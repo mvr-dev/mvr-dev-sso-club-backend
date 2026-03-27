@@ -7,7 +7,7 @@ class Account(BaseModel):
     user_id : int
     organization_code : str | None = "1234"
     login : str
-    password : str
+    password : bytes
     registration_date : date = date.today()
     status : int
     

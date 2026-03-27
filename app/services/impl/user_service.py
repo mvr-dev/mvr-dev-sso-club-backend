@@ -1,8 +1,12 @@
 import uuid
+
+from fastapi import Depends, HTTPException, status
+from api import dependensies
+from services.auth.utils import validate_password
 from services.iaccount_service import IAccountService
 from data.repositories.iuser_repository import IUserRepository
 from data import UserResponse, UserCreateRequest
-from data.models.user import User
+from data.models.user import Credentials, User
 from ..iuser_service import IUserService
 
 class UserService(IUserService):
@@ -59,3 +63,12 @@ class UserService(IUserService):
             house=saved_user.house,
             phone=saved_user.phone
         )
+    async def validate_user(self,creds : Credentials):
+        unauthorized_exc = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail='invalid login or password')
+        if not (account := await self.accountService.getAccountByLogin(creds.login)):
+            print('no auth')
+            raise unauthorized_exc
+        if validate_password(creds.password,account.password):
+            print('auth')
+            return self.getUserById(account.user_id)
+        raise unauthorized_exc

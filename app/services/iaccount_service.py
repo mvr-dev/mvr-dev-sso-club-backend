@@ -7,5 +7,10 @@ class IAccountService(ABC):
     def addAccount(self,user_id:int,password:str,email:str) -> Account:
         pass
 
+    @abstractmethod
     def getAccountById(self, id:int) -> Account:
+        pass
+    
+    @abstractmethod
+    def getAccountByLogin(self,login:str)-> Account:
         pass
