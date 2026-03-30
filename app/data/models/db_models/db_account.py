@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Date, ForeignKey, Integer, String, Boolean, DateTime
+from sqlalchemy import Column, Date, ForeignKey, Integer, LargeBinary, String, Boolean, DateTime
 from core.database import Base
 
 class Account(Base):
@@ -8,6 +8,6 @@ class Account(Base):
     user_id = Column(Integer,ForeignKey("person.person_id",ondelete="CASCADE"),name="person_id")
     organization_code = Column(String,nullable=False)
     login = Column(String, unique=True, nullable=False)
-    password = Column(String,name="password_hash" ,nullable=False)
+    password = Column(LargeBinary,name="password_hash" ,nullable=False)
     registration_date = Column(Date)
     status = Column(Integer, nullable=False, default=2)
