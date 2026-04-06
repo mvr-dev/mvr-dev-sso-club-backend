@@ -2,7 +2,7 @@ from datetime import date
 from pydantic import BaseModel, EmailStr
 from typing import Optional
 
-class UserCreateRequest(BaseModel):
+class UserUpdateRequest(BaseModel):
     surname : str
     name :  str
     patronymic : Optional[str] = None
@@ -14,7 +14,3 @@ class UserCreateRequest(BaseModel):
     city : Optional[str] = None
     street : Optional[str] = None
     house : Optional[str] = None
-
-
-    password : str
-    email : EmailStr
