@@ -11,7 +11,7 @@ class UserRepository(IUserRepository):
     
     async def getUserById(self, id: int) -> Optional[UserModel]:
         # Исправлено: filter должен использовать сравнение ==
-        foundUser = self.db.query(DbUser).filter(DbUser.id == id).first()
+        foundUser = self.db.query(DbUser).filter(DbUser.id == id).one_or_none()
         if foundUser is not None:
             # Создаем UserModel, передавая параметры по порядку
             return UserModel(
@@ -29,8 +29,7 @@ class UserRepository(IUserRepository):
                 user_code=foundUser.user_code,
                 birthday=foundUser.birthday
             )
-        else:
-            raise FileNotFoundError(f"User with id {id} not found")
+        
 
     async def getAllUsers(self) -> List[UserModel]:
         users = self.db.query(DbUser).all()
@@ -95,9 +94,37 @@ class UserRepository(IUserRepository):
         
 
     
-    async def updateUser(self, user: UserModel)-> UserModel:
-        pass
+    async def updateUser(self,id:int ,user: UserModel)-> UserModel:
+        userToUpdate = self.db.query(DbUser).filter(DbUser.id==id).first()
+        if userToUpdate != None:
+            userToUpdate.birthday = user.birthday
+            userToUpdate.city = user.city
+            userToUpdate.clone_code = user.clone_code
+            userToUpdate.house = user.house
+            userToUpdate.name = user.name
+            userToUpdate.patronymic = user.patronymic
+            userToUpdate.surname = user.surname
+            userToUpdate.street = user.street
+            userToUpdate.region = user.region
+            self.db.commit()
+            return UserModel(
+                id=userToUpdate.id,
+                surname=userToUpdate.surname,
+                name=userToUpdate.name,
+                patronymic=userToUpdate.patronymic,
+                email=userToUpdate.email,
+                phone=userToUpdate.phone,
+                region=userToUpdate.region,
+                city=userToUpdate.city,
+                street=userToUpdate.street,
+                house=userToUpdate.house,
+                clone_code=userToUpdate.clone_code,
+                user_code=userToUpdate.user_code,
+                birthday=userToUpdate.birthday
+            )
 
     
     async def deleteUser(self, id: int):
-        pass
+        user = self.db.query(DbUser).filter(DbUser.id == id).first()
+        self.db.delete(user)
+        self.db.commit()

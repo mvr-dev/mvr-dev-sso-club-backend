@@ -7,6 +7,10 @@ class IAccountRepository(ABC):
     async def getAccountById(self, id : int) -> Optional[Account]: # type: ignore
         pass
 
+    @abstractmethod
+    async def getAccountByLogin(self, login:str)->Optional[Account]:
+        pass
+
     @abstractmethod 
     async def getAllAccounts(self) -> List[Account]: # type: ignore
         pass

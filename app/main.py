@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from api.routers.signin import router as signin_router
 from api.routers.users import router as users_router
+from api.routers.suggestions import router as suggestion_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -16,6 +17,7 @@ app.add_middleware(
 
 app.include_router(signin_router, prefix="/api/v1", tags=["authentication"])
 app.include_router(users_router, prefix="/api/v1", tags=["user_info"])
+app.include_router(suggestion_router,prefix="/api/v1",tags=['suggestions'])
 
 @app.get("/")
 async def root():

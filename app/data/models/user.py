@@ -4,7 +4,7 @@ from datetime import date
 
 class User(BaseModel):
     id : Optional[int] = None
-    user_code : str
+    user_code : Optional[str]
 
     #fullname
     surname : str
@@ -21,6 +21,10 @@ class User(BaseModel):
     phone : str
 
     clone_code : str = '5410'
+
+class Credentials(BaseModel):
+    login : str
+    password : str
 
 
 
