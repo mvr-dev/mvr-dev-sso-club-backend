@@ -68,12 +68,14 @@ class UserRepository(IUserRepository):
             user_code=user.user_code,
             birthday=user.birthday
         )
-        
+        try:
         # Добавляем в сессию и коммитим
-        self.db.add(db_user)
-        self.db.commit()
-        self.db.refresh(db_user)  # Обновляем объект, чтобы получить ID
-        
+            self.db.add(db_user)
+            self.db.commit()
+            self.db.refresh(db_user)  # Обновляем объект, чтобы получить ID
+        except Exception as e:
+            self.db.rollback()  # ВАЖНО: откатываем транзакцию
+            raise e
         # Возвращаем Pydantic модель с заполненным ID
         return UserModel(
                 id=db_user.id,
