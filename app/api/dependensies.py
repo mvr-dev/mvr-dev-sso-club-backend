@@ -1,4 +1,5 @@
 from fastapi import Depends
+from services.impl.auth_service import AuthService
 from services.impl.account_service import AccountService
 from data.repositories.impl.account_repository import AccountRepository
 from services.impl.user_service import UserService
@@ -14,6 +15,7 @@ _account_repository = AccountRepository(db)
 _account_service = AccountService(_account_repository)
 _user_repository = UserRepository(db)
 _user_service = UserService(_user_repository,_account_service)
+_auth_service = AuthService(UserService,AccountService)
 
 _names_suggestions_service = NamesSuggestionsService(_user_repository)
 _surnames_suggestion_service = SurnamesSuggestionsService(_user_repository)
@@ -39,3 +41,6 @@ def get_user_repository() -> UserRepository:
 
 def get_account_service() ->AccountService:
     return _account_service
+
+def get_auth_service() -> AuthService:
+    return _auth_service

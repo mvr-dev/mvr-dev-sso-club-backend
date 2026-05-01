@@ -13,9 +13,6 @@ class IUserService(ABC):
     async def addUser(self, userCreateRequest: UserCreateRequest) -> UserResponse:
         pass
     
-    @abstractmethod
-    def validate_user(self,creds : Credentials):
-        pass
 
     @abstractmethod 
     async def updateUser(self,id: int,userUpdateRequest: UserUpdateRequest, user: User) -> UserResponse:

@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from jwt import ExpiredSignatureError
+from services.iauth_service import IAuthService
 from data.models.update_request.user_update_request import UserUpdateRequest
 from data.models import UserResponse, UserCreateRequest
 from services.iuser_service import IUserService
@@ -14,7 +15,8 @@ http_bearer = HTTPBearer()
 
 async def get_current_auth_user(
         token : HTTPAuthorizationCredentials = Depends(http_bearer),
-        userService: IUserService = Depends(dependensies.get_user_service)
+        userService: IUserService = Depends(dependensies.get_user_service),
+        authService: IAuthService = Depends(dependensies.get_auth_service)
     ):
     try:
         payload = decode(token=token.credentials)

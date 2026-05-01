@@ -17,7 +17,7 @@ async def register(
     return await userService.addUser(userCreateRequest)
 
 @router.post("/login",response_model=TokenInfo)
-async def auth_issue_jwt(user: User = Depends(dependensies.get_user_service().validate_user)):
+async def auth_issue_jwt(user: User = Depends(dependensies.get_auth_service().validate_user)):
     user = await user
     jwt_payload = {
         'sub': str(user.id),

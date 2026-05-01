@@ -66,15 +66,6 @@ class UserService(IUserService):
             house=saved_user.house,
             phone=saved_user.phone
         )
-    async def validate_user(self,creds : Credentials):
-        unauthorized_exc = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail='invalid login or password')
-        if not (account := await self._accountService.getAccountByLogin(creds.login)):
-            print('no auth')
-            raise unauthorized_exc
-        if validate_password(creds.password,account.password):
-            print('auth')
-            return self.getUserById(account.user_id)
-        raise unauthorized_exc
     
     async def updateUser(self,id:int ,userUpdateRequest: UserUpdateRequest, userToUpdate: UserResponse):
         user = User(id = None,
