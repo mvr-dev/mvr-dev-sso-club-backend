@@ -1,4 +1,8 @@
 from fastapi import Depends
+from services.impl.membership_service import MembershipService
+from data.repositories.impl.membership_repository import MembershipRepository
+from data.repositories.impl.community_repository import CommunityRepository
+from services.impl.community_service import CommunityService
 from services.impl.auth_service import AuthService
 from services.impl.account_service import AccountService
 from data.repositories.impl.account_repository import AccountRepository
@@ -15,13 +19,17 @@ _account_repository = AccountRepository(db)
 _account_service = AccountService(_account_repository)
 _user_repository = UserRepository(db)
 _user_service = UserService(_user_repository,_account_service)
-_auth_service = AuthService(UserService,AccountService)
+_auth_service = AuthService(_user_service,_account_service)
+_membership_repository = MembershipRepository(db)
+_membership_service = MembershipService(_membership_repository)
+_community_repository = CommunityRepository(db)
+_community_service = CommunityService(_community_repository)
 
 _names_suggestions_service = NamesSuggestionsService(_user_repository)
 _surnames_suggestion_service = SurnamesSuggestionsService(_user_repository)
 _cities_suggestion_service = CitiesSuggestionsService(_user_repository)
 _streets_suggestion_service = CitiesSuggestionsService(_user_repository)
-
+ 
 
 
 def get_user_service()->UserService:
@@ -44,3 +52,10 @@ def get_account_service() ->AccountService:
 
 def get_auth_service() -> AuthService:
     return _auth_service
+# def get_membership_service():
+#     return _membership_service
+def get_community_service():
+    return _community_service
+
+def get_membership_service():
+    return _membership_service

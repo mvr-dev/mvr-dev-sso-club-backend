@@ -1,10 +1,10 @@
 from datetime import datetime, timezone
 from enum import Enum
 
-from sqlalchemy import Column, DateTime, Integer, String, Text
+from sqlalchemy import Column, DateTime, Integer, String, Text, Enum as SqlEnum
 from sqlalchemy.orm import relationship
 
-from app.data.models.enums.community_status_enum import CommunityStatus
+from data.models.enums.community_status_enum import CommunityStatus
 from data.models.enums.community_type_enum import CommunityType
 from core.database import Base
 
@@ -19,7 +19,7 @@ class Community(Base):
         autoincrement=True
     )
     community_type = Column(
-        Enum(CommunityType), 
+        SqlEnum(CommunityType), 
         nullable=False
     )
     name = Column(
@@ -31,19 +31,17 @@ class Community(Base):
         nullable=False
     )
     status = Column(
-        Enum(CommunityStatus), 
+        SqlEnum(CommunityStatus), 
         nullable=False, 
-        default=CommunityStatus.DRAFT
+        default=CommunityStatus.DRAFT.value
     )
     created_at = Column(
         DateTime(timezone=True), 
         nullable=False, 
         default=datetime.now(timezone.utc)
     )
-
-    # Relationships
-    memberships = relationship(
-        "Membership", 
-        back_populates="community",
-        lazy="selectin"  # Жадная загрузка по умолчанию
+    updated_at = Column(
+        DateTime(timezone=True), 
+        nullable=False, 
+        default=datetime.now(timezone.utc)
     )

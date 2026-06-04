@@ -27,8 +27,8 @@ CREATE TABLE Account (
 
 -- ENUM'ы
 DO $$ BEGIN CREATE TYPE community_type_enum AS ENUM ('KLUB','KOOP','KUST','DELO','SOYUZ','INFO'); EXCEPTION WHEN duplicate_object THEN NULL; END $$;
-DO $$ BEGIN CREATE TYPE community_status_enum AS ENUM ('draft','active','paused','closed','archived'); EXCEPTION WHEN duplicate_object THEN NULL; END $$;
-DO $$ BEGIN CREATE TYPE membership_status_enum AS ENUM ('active','paused','left'); EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+DO $$ BEGIN CREATE TYPE community_status_enum AS ENUM ('DRAFT','ACTIVE','PAUSED','CLOSED','ARCHIVED'); EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+DO $$ BEGIN CREATE TYPE membership_status_enum AS ENUM ('ACTIVE','PAUSED','LEFT'); EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
 
 -- community
@@ -37,8 +37,9 @@ CREATE TABLE IF NOT EXISTS community (
     community_type        community_type_enum NOT NULL,
     name                  text NOT NULL,
     purpose               text NOT NULL,
-    status                community_status_enum NOT NULL DEFAULT 'draft',
+    status                community_status_enum NOT NULL DEFAULT 'DRAFT',
     created_at            timestamptz NOT NULL DEFAULT now(),
+    updated_at            timestamptz NOT NULL DEFAULT now(),
     CHECK (name <> ''),
     CHECK (purpose <> '')
 );
@@ -49,11 +50,11 @@ CREATE TABLE IF NOT EXISTS membership (
     person_id             integer NOT NULL REFERENCES person(person_id) ON DELETE CASCADE,
     community_id          integer NOT NULL REFERENCES community(community_id) ON DELETE CASCADE,
     joined_at             timestamptz NOT NULL DEFAULT now(),
-    status                membership_status_enum NOT NULL DEFAULT 'active',
+    status                membership_status_enum NOT NULL DEFAULT 'ACTIVE',
     left_at               timestamptz,
-    CHECK ((status = 'left' AND left_at IS NOT NULL) OR (status <> 'left'))
+    CHECK ((status = 'LEFT' AND left_at IS NOT NULL) OR (status <> 'LEFT'))
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS ux_membership_active
     ON membership(person_id, community_id)
-    WHERE status = 'active';
+    WHERE status = 'ACTIVE';

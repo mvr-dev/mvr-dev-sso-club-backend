@@ -1,10 +1,10 @@
 from datetime import datetime, timezone
 from enum import Enum
 
-from sqlalchemy import CheckConstraint, Column, DateTime, ForeignKey, Index, Integer
+from sqlalchemy import CheckConstraint, Column, DateTime, ForeignKey, Index, Integer, Enum as SQLEnum
 from sqlalchemy.orm import relationship
 
-from app.data.models.enums.membership_type_enum import MembershipType
+from data.models.enums.membership_type_enum import MembershipType
 from core.database import Base
 
 
@@ -30,7 +30,8 @@ class Membership(Base):
     )
     person_id = Column(
         Integer, 
-        ForeignKey("person.person_id", ondelete="CASCADE"), 
+        ForeignKey("person.person_id", ondelete="CASC" \
+        "ADE"), 
         nullable=False
     )
     community_id = Column(
@@ -41,10 +42,10 @@ class Membership(Base):
     joined_at = Column(
         DateTime(timezone=True), 
         nullable=False, 
-        default=datetime.datetime.now(timezone.utc)
+        default=datetime.now(timezone.utc)
     )
     status = Column(
-        Enum(MembershipType), 
+        SQLEnum(MembershipType), 
         nullable=False, 
         default=MembershipType.ACTIVE
     )

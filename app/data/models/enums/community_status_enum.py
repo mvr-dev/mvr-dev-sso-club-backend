@@ -2,8 +2,8 @@ from enum import Enum
 
 
 class CommunityStatus(Enum):
-    DRAFT = "draft"
-    ACTIVE = 'active'
-    PAUSED = 'paused'
-    CLOSED = 'closed'
-    ARCHIVED = 'archived'
+    DRAFT = "DRAFT"
+    ACTIVE = 'ACTIVE'
+    PAUSED = 'PAUSED'
+    CLOSED = 'CLOSED'
+    ARCHIVED = 'ARCHIVED'

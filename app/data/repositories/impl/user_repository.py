@@ -30,6 +30,7 @@ class UserRepository(IUserRepository):
                 birthday=foundUser.birthday
             )
         
+        
 
     async def getAllUsers(self) -> List[UserModel]:
         users = self.db.query(DbUser).all()

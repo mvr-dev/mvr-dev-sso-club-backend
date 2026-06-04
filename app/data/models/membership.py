@@ -5,7 +5,7 @@ from datetime import datetime
 
 from pydantic import BaseModel
 
-from app.data.models.enums.membership_type_enum import MembershipType
+from data.models.enums.membership_type_enum import MembershipType
 
 
 class Membership(BaseModel):

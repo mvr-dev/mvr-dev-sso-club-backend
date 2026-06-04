@@ -2,6 +2,9 @@ from fastapi import FastAPI
 from api.routers.signin import router as signin_router
 from api.routers.users import router as users_router
 from api.routers.suggestions import router as suggestion_router
+from api.routers.community import router as community_router
+from api.routers.membership import router as membership_router
+from api.routers.listing import router as listing_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -18,6 +21,9 @@ app.add_middleware(
 app.include_router(signin_router, prefix="/api/v1", tags=["authentication"])
 app.include_router(users_router, prefix="/api/v1", tags=["user_info"])
 app.include_router(suggestion_router,prefix="/api/v1",tags=['suggestions'])
+app.include_router(community_router,prefix="/api/v1",tags=['community'])
+app.include_router(membership_router,prefix="/api/v1",tags=['membership'])
+app.include_router(listing_router, prefix="/api/v1",tags=['listing'])
 
 @app.get("/")
 async def root():
